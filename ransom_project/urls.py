@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from ransom0 import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('ransom0.urls'))
+    path('', include('ransom0.urls')),
+    path('decrypt/',views.decrypt_files,name='decrypt')
 ]
